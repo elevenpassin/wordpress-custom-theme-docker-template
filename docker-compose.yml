@@ -3,15 +3,17 @@ version: '3.1'
 services:
   # Database
   db:
-    image: mysql:5.7
+    image: mariadb:latest
     volumes:
       - db_data:/var/lib/mysql
     restart: always
+    ports:
+      - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
     networks:
       - wpsite
   # phpmyadmin
@@ -36,7 +38,7 @@ services:
       - 8000:80
     restart: always
     volumes: 
-      - './:/var/www/html'
+      - ./:/var/www/html/wp-content/themes/newtheme
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
